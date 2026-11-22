@@ -1,0 +1,49 @@
+Mapas (estilo HOI4)
+===================
+
+Cada carpeta de aquí es un mapa que aparece en "Elige un mapa" al empezar:
+  nuevo_mundo/   Sin colonizar: creas tu civilización, eliges dónde aparecer y colonizas.
+  viejo_mundo/   Todo colonizado: el mundo ya está repartido y eliges una nación existente.
+
+Archivos de cada mapa
+---------------------
+mapa.json
+    {"nombre": "...", "descripcion": "...", "tipo": "colonizacion" o "establecido"}
+    "colonizacion" -> creas tu nación;  "establecido" -> eliges una de naciones.json.
+
+provincias.png
+    Cada provincia pintada con un color ÚNICO (como provinces.bmp en HOI4). 480 x 270.
+    En el juego no se ven estos colores: se dibuja el terreno, los países, etc.
+
+provincias.json  (una provincia por línea)
+    {"id": 1, "nombre": "Ircorum", "color": "#c06983", "tipo": "tierra", "terreno": "colinas", "dueno": null}
+      color    su color en provincias.png (tiene que coincidir exacto)
+      tipo     "tierra" o "mar" (el mar no se puede colonizar)
+      terreno  llanura, bosque, colinas, montana, desierto, pantano o tundra
+      dueno    null = sin colonizar, o el "id" de una nación de naciones.json (ej. "DAN").
+               Si pones un dueño que no está en naciones.json, se crea una nación al azar
+               con ese nombre.
+
+regiones.json  (una región por línea)
+    {"id": 1, "nombre": "Marca de Berar", "tipo": "tierra", "provincias": [23, 45, 51]}
+    Las regiones de tierra solo llevan provincias de tierra, y las de mar solo de mar.
+    También se editan en el juego: "Mapa de regiones" -> "Editar regiones" -> "Guardar".
+
+naciones.json  (opcional; una nación por línea)
+    {"id": "DAN", "nombre": "Sultanato de Danquelica", "color": "#21971b", "capital": 3,
+     "bandera": [{"patron": "liso", "color": "#20764a"}, {"patron": "cruz", "color": "#ffffff"}],
+     "lider": {"nombre": "Federico el Pequeño", "cuerpo": "clasica", "ojos": "sorprendidos"}}
+      id       código de 3 letras (el que va en "dueno" de provincias.json)
+      capital  id de una provincia de esa nación
+      bandera  capas de abajo hacia arriba; "patron" = un PNG de datos/banderas/patrones/
+      lider    "cuerpo" y "ojos" = nombres de PNG de datos/lideres/cuerpos y /ojos
+
+Generar mapas (¡sobrescribe los archivos de esa carpeta!)
+---------------------------------------------------------
+    python herramientas/generar_mapa.py
+        -> nuevo_mundo (semilla 7)
+    python herramientas/generar_mapa.py --carpeta viejo_mundo --semilla 1815 --establecido
+        -> viejo_mundo (20 naciones)
+    python herramientas/generar_mapa.py --carpeta mi_mapa --semilla 1234 --nombre "Mi mapa"
+        -> un mapa nuevo distinto (aparece solo en el selector)
+    Opciones: --establecido (todo repartido) y --naciones 30 (cuántas naciones).

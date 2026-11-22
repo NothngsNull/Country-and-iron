@@ -1,0 +1,14 @@
+Líderes countryball
+====================
+
+cuerpos/     240x240 px. Contorno NEGRO, interior BLANCO (ahí se pinta la bandera),
+             fuera TRANSPARENTE. El nombre del archivo es el nombre del cuerpo.
+ojos/        240x240 px, fondo transparente, solo los ojos en la zona de la cara
+             (más o menos a la altura y = 105). Reglas countryball: óvalos blancos
+             con contorno negro, SIN pupilas; la expresión se hace cortando el ojo
+             con un párpado recto, y para mirar a un lado se mueven los dos ojos.
+accesorios/  vacío por ahora (sombreros, bigotes, monóculos... más adelante).
+
+Puedes dibujar los tuyos en Paint/GIMP con ese formato y dejarlos en la carpeta:
+el juego los carga solos. Para regenerar los de ejemplo:
+    python herramientas/generar_lideres.py
